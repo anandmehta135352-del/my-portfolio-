@@ -88,8 +88,8 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Right Action: Resume & Mobile Hamburger */}
-          <div className="flex items-center gap-3">
+          {/* Right Action: Resume, Lock & Mobile Hamburger */}
+          <div className="flex items-center gap-2.5">
             <a
               href={personal.resumeUrl}
               target="_blank"
@@ -99,6 +99,19 @@ export default function Navbar() {
               <FileText className="w-3.5 h-3.5" />
               <span>Resume</span>
             </a>
+
+            <button
+              onClick={() => {
+                localStorage.removeItem('portfolio_authenticated');
+                window.location.reload();
+              }}
+              type="button"
+              className="p-2 rounded-lg bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-rose-400 hover:border-rose-500/30 transition-colors"
+              title="Lock Portfolio"
+              aria-label="Lock portfolio access"
+            >
+              <Sparkles className="w-4 h-4 text-cyan-400" />
+            </button>
 
             {/* Mobile Menu Button */}
             <button
