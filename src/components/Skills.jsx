@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Code2, 
   Layout, 
@@ -7,7 +7,9 @@ import {
   Sparkles,
   Layers,
   Terminal,
-  Cpu
+  Cpu,
+  Grid,
+  CheckCircle2
 } from 'lucide-react';
 import { 
   FaJs, 
@@ -33,35 +35,46 @@ const categoryIconMap = {
   Tools: Wrench,
 };
 
-const skillIconMap = {
-  JavaScript: FaJs,
-  Python: FaPython,
-  Java: FaJava,
-  'C++': SiCplusplus,
-  React: FaReact,
-  'Tailwind CSS': SiTailwindcss,
-  HTML5: FaHtml5,
-  HTML: FaHtml5,
-  CSS3: FaCss3Alt,
-  CSS: FaCss3Alt,
-  Git: FaGitAlt,
-  GitHub: FaGithub,
-  'VS Code': Terminal,
-  Figma: FaFigma,
+const skillDetailsMap = {
+  JavaScript: { icon: FaJs, color: '#F7DF1E', percentage: 90, level: 'Advanced' },
+  Python: { icon: FaPython, color: '#3776AB', percentage: 75, level: 'Intermediate' },
+  Java: { icon: FaJava, color: '#E53E3E', percentage: 70, level: 'Intermediate' },
+  'C++': { icon: SiCplusplus, color: '#00599C', percentage: 75, level: 'Intermediate' },
+  React: { icon: FaReact, color: '#61DAFB', percentage: 92, level: 'Advanced' },
+  'Tailwind CSS': { icon: SiTailwindcss, color: '#06B6D4', percentage: 90, level: 'Advanced' },
+  HTML5: { icon: FaHtml5, color: '#E34F26', percentage: 95, level: 'Advanced' },
+  HTML: { icon: FaHtml5, color: '#E34F26', percentage: 95, level: 'Advanced' },
+  CSS3: { icon: FaCss3Alt, color: '#1572B6', percentage: 90, level: 'Advanced' },
+  CSS: { icon: FaCss3Alt, color: '#1572B6', percentage: 90, level: 'Advanced' },
+  Git: { icon: FaGitAlt, color: '#F05032', percentage: 85, level: 'Proficient' },
+  GitHub: { icon: FaGithub, color: '#FFFFFF', percentage: 88, level: 'Proficient' },
+  'VS Code': { icon: Terminal, color: '#007ACC', percentage: 90, level: 'Proficient' },
+  Figma: { icon: FaFigma, color: '#F24E1E', percentage: 75, level: 'Intermediate' },
 };
 
 export default function Skills() {
   const { skills } = portfolioData;
+  const [activeCategory, setActiveCategory] = useState('All');
+
+  // Gather all unique skills into a single array for "All" tab view
+  const allSkills = skills.flatMap(cat => 
+    cat.items.map(item => ({ ...item, category: cat.category }))
+  );
+
+  const displayedSkills = activeCategory === 'All'
+    ? skills
+    : skills.filter(cat => cat.category === activeCategory);
 
   return (
     <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8 relative">
-      {/* Background Glow */}
-      <div className="absolute top-1/3 right-0 w-80 h-80 bg-cyan-500/10 blur-[110px] rounded-full pointer-events-none" />
+      {/* Background Glow Accents */}
+      <div className="absolute top-1/3 right-0 w-96 h-96 bg-cyan-500/10 blur-[130px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-10 left-10 w-80 h-80 bg-indigo-500/10 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-6xl mx-auto relative z-10">
         
         {/* Section Header */}
-        <div className="text-center space-y-3 mb-16">
+        <div className="text-center space-y-3 mb-12">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-semibold uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Technical Toolkit</span>
@@ -70,27 +83,56 @@ export default function Skills() {
             Skills & Technologies
           </h2>
           <p className="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto">
-            A curated overview of the core programming languages, frameworks, and developer tools I build with.
+            A curated overview of the programming languages, frontend frameworks, and developer tools I use.
           </p>
+
+          {/* Interactive Category Filter Pills */}
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-4">
+            <button
+              type="button"
+              onClick={() => setActiveCategory('All')}
+              className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
+                activeCategory === 'All'
+                  ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
+                  : 'glass-card text-slate-400 hover:text-white hover:border-slate-700'
+              }`}
+            >
+              All Categories
+            </button>
+            {skills.map((cat) => (
+              <button
+                key={cat.category}
+                type="button"
+                onClick={() => setActiveCategory(cat.category)}
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
+                  activeCategory === cat.category
+                    ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
+                    : 'glass-card text-slate-400 hover:text-white hover:border-slate-700'
+                }`}
+              >
+                {cat.category}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Skills Categories Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {skills.map((cat, idx) => {
+          {displayedSkills.map((cat, idx) => {
             const CategoryIcon = categoryIconMap[cat.category] || Layers;
             return (
               <div
                 key={idx}
-                className="glass-card rounded-2xl p-6 sm:p-7 border border-slate-800/80 hover:border-slate-700 transition-all duration-300 flex flex-col justify-between"
+                className="glass-card rounded-2xl p-6 sm:p-7 border border-slate-800/80 hover:border-cyan-500/30 transition-all duration-300 flex flex-col justify-between group shadow-xl"
               >
                 <div>
                   {/* Category Header */}
-                  <div className="flex items-center gap-3 pb-4 mb-5 border-b border-slate-800">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500/20 to-indigo-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
-                      <CategoryIcon className="w-5 h-5" />
+                  <div className="flex items-center gap-3.5 pb-4 mb-5 border-b border-slate-800/80">
+                    <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-cyan-500/20 to-indigo-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-105 transition-transform duration-300 shadow-glow-cyan/30">
+                      <CategoryIcon className="w-5.5 h-5.5" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-white font-display">
+                      <h3 className="text-xl font-bold text-white font-display group-hover:text-cyan-300 transition-colors">
                         {cat.category}
                       </h3>
                       <p className="text-xs text-slate-400">
@@ -99,28 +141,52 @@ export default function Skills() {
                     </div>
                   </div>
 
-                  {/* Skill Items List */}
-                  <div className="space-y-3">
+                  {/* Skill Items List with Brand Colors & Progress Bars */}
+                  <div className="space-y-4">
                     {cat.items.map((skill, sIdx) => {
-                      const SkillIcon = skillIconMap[skill.name] || Code2;
+                      const details = skillDetailsMap[skill.name] || {
+                        icon: Code2,
+                        color: '#38BDF8',
+                        percentage: 80,
+                        level: skill.level || 'Proficient'
+                      };
+                      const SkillIcon = details.icon;
+
                       return (
                         <div
                           key={sIdx}
-                          className="flex items-center justify-between p-3 rounded-xl bg-slate-950/60 border border-slate-800/80 hover:border-cyan-500/40 hover:bg-slate-900/60 transition-all duration-200 group"
+                          className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80 hover:border-cyan-500/40 hover:bg-slate-900/70 transition-all duration-200 space-y-2.5 group/item"
                         >
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-slate-300 group-hover:text-cyan-400 group-hover:bg-cyan-950/30 transition-colors text-base">
-                              <SkillIcon className="w-4 h-4" />
+                          {/* Skill Name & Brand Icon */}
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div
+                                className="w-9 h-9 rounded-lg flex items-center justify-center bg-slate-900 border border-slate-800 group-hover/item:border-slate-700 transition-all text-lg"
+                                style={{ color: details.color }}
+                              >
+                                <SkillIcon className="w-5 h-5" />
+                              </div>
+                              <div>
+                                <span className="text-sm font-semibold text-slate-200 group-hover/item:text-white block">
+                                  {skill.name}
+                                </span>
+                                <span className="text-[11px] text-slate-400 block">
+                                  {skill.level || details.level}
+                                </span>
+                              </div>
                             </div>
-                            <span className="text-sm font-semibold text-slate-200 group-hover:text-white">
-                              {skill.name}
+                            <span className="text-xs font-mono font-bold text-cyan-400">
+                              {details.percentage}%
                             </span>
                           </div>
-                          {skill.level && (
-                            <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-slate-800/80 text-slate-400 border border-slate-700/50 group-hover:border-cyan-500/30 group-hover:text-cyan-300 transition-colors">
-                              {skill.level}
-                            </span>
-                          )}
+
+                          {/* Skill Visual Progress Bar */}
+                          <div className="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-800/60">
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-indigo-500 transition-all duration-500 group-hover/item:from-cyan-400 group-hover/item:to-indigo-400"
+                              style={{ width: `${details.percentage}%` }}
+                            />
+                          </div>
                         </div>
                       );
                     })}
@@ -129,7 +195,10 @@ export default function Skills() {
 
                 {/* Category Footer Note */}
                 <div className="mt-6 pt-4 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
-                  <span>Verified Experience</span>
+                  <span className="flex items-center gap-1.5 text-slate-400">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" />
+                    <span>Verified Skillset</span>
+                  </span>
                   <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse" />
                 </div>
               </div>
