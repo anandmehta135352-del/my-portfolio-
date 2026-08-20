@@ -26,9 +26,9 @@ export default function Contact() {
   const { contact, personal } = portfolioData;
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
+    name: 'Anand kumar',
+    email: 'anandmehta135352@gmail.com',
+    subject: 'B-tech CSE',
     message: '',
   });
 
@@ -53,7 +53,12 @@ export default function Contact() {
   };
 
   const handleReset = () => {
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    setFormData({
+      name: 'Anand kumar',
+      email: 'anandmehta135352@gmail.com',
+      subject: 'B-tech CSE',
+      message: '',
+    });
     setSubmitted(false);
   };
 
@@ -230,7 +235,7 @@ export default function Contact() {
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        placeholder="John Doe"
+                        placeholder="Anand kumar"
                         className="w-full px-4 py-2.5 rounded-xl bg-slate-950/70 border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
                       />
                     </div>
@@ -246,7 +251,7 @@ export default function Contact() {
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        placeholder="john@example.com"
+                        placeholder="anandmehta135352@gmail.com"
                         className="w-full px-4 py-2.5 rounded-xl bg-slate-950/70 border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
                       />
                     </div>
@@ -262,7 +267,7 @@ export default function Contact() {
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
-                      placeholder="Internship opportunity / Project collaboration"
+                      placeholder="B-tech CSE"
                       className="w-full px-4 py-2.5 rounded-xl bg-slate-950/70 border border-slate-800 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
                     />
                   </div>
