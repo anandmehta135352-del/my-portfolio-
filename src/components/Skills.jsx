@@ -36,12 +36,9 @@ const categoryIconMap = {
 };
 
 const skillDetailsMap = {
-  JavaScript: { icon: FaJs, color: '#F7DF1E', percentage: 90, level: 'Advanced' },
-  Python: { icon: FaPython, color: '#3776AB', percentage: 75, level: 'Intermediate' },
-  Java: { icon: FaJava, color: '#E53E3E', percentage: 70, level: 'Intermediate' },
-  'C++': { icon: SiCplusplus, color: '#00599C', percentage: 75, level: 'Intermediate' },
-  React: { icon: FaReact, color: '#61DAFB', percentage: 92, level: 'Advanced' },
-  'Tailwind CSS': { icon: SiTailwindcss, color: '#06B6D4', percentage: 90, level: 'Advanced' },
+  C: { icon: SiCplusplus, color: '#A8B9CC', percentage: 80, level: 'Proficient' },
+  'C++': { icon: SiCplusplus, color: '#00599C', percentage: 80, level: 'Proficient' },
+  Python: { icon: FaPython, color: '#3776AB', percentage: 65, level: 'Basics' },
   HTML5: { icon: FaHtml5, color: '#E34F26', percentage: 95, level: 'Advanced' },
   HTML: { icon: FaHtml5, color: '#E34F26', percentage: 95, level: 'Advanced' },
   CSS3: { icon: FaCss3Alt, color: '#1572B6', percentage: 90, level: 'Advanced' },
@@ -49,7 +46,6 @@ const skillDetailsMap = {
   Git: { icon: FaGitAlt, color: '#F05032', percentage: 85, level: 'Proficient' },
   GitHub: { icon: FaGithub, color: '#FFFFFF', percentage: 88, level: 'Proficient' },
   'VS Code': { icon: Terminal, color: '#007ACC', percentage: 90, level: 'Proficient' },
-  Figma: { icon: FaFigma, color: '#F24E1E', percentage: 75, level: 'Intermediate' },
 };
 
 export default function Skills() {
